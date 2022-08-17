@@ -24,12 +24,11 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web_server_ec2_1" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t2.micro"
-  vpc_security_group_ids = ["aws_security_group"] ## PENDIENTE
+  vpc_security_group_ids = [aws_security_group.SoftServe-sg.id] ## PENDIENTE
   subnet_id              = aws_subnet.SoftServe-2a.id
 
-  key_name  = "first_ec2"
-  user_data = file("install_apache.sh")
-
+  # key_name  = "first_ec2"
+  user_data = file("server_setup.sh")
 
   tags = {
     Name = "web_server_ec2-1"
@@ -39,48 +38,13 @@ resource "aws_instance" "web_server_ec2_1" {
 resource "aws_instance" "web_server_ec2_2" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t2.micro"
-  vpc_security_group_ids = ["aws_security_group"] ## PENDIENTE
-  subnet_id              = aws_subnet.SoftServe-2b
+  vpc_security_group_ids = [aws_security_group.SoftServe-sg.id] ## PENDIENTE
+  subnet_id              = aws_subnet.SoftServe-2b.id
 
-  key_name  = "first_ec2"
-  user_data = file("install_apache.sh")
-
+  # key_name  = "first_ec2"
+  user_data = file("server_setup.sh")
 
   tags = {
     Name = "web_server_ec2-2"
-  }
-}
-
-# --------------------
-# Load Balancer
-
-
-
-
-# --------------------
-# NACL -> Comunica con las instancias y con el LB
-resource "aws_network_acl" "main" {
-  vpc_id = aws_vpc.main.id
-
-  egress {
-    protocol   = "tcp"
-    rule_no    = 200
-    action     = "allow"
-    cidr_block = "10.3.0.0/18"
-    from_port  = 443
-    to_port    = 443
-  }
-
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 100
-    action     = "allow"
-    cidr_block = "10.3.0.0/18"
-    from_port  = 80
-    to_port    = 80
-  }
-
-  tags = {
-    Name = "main"
   }
 }
