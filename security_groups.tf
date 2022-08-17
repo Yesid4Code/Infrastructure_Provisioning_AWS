@@ -18,7 +18,7 @@ resource "aws_default_security_group" "default-sg" {
   }
 
   tags = {
-    Name     = "Default-sg"
+    Name = "Default-sg"
   }
 
   depends_on = [aws_vpc.informe_nube]
@@ -28,10 +28,10 @@ resource "aws_default_security_group" "default-sg" {
 resource "aws_security_group" "SoftServe-sg" {
   name        = "SoftServe-sg"
   description = "Security group for EC2 instances"
-  vpc_id      = aws_vpc.informe_nube.id
+  vpc_id      = aws_vpc.SoftServe-vpc.id
 
   tags = {
-    Name     = "SoftServe-sg"
+    Name = "SoftServe-sg"
   }
 }
 
@@ -42,7 +42,7 @@ resource "aws_security_group_rule" "http" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
-  security_group_id = aws_security_group.servidor_web.id
+  security_group_id = aws_security_group.SoftServe-sg.id
   description       = "Allow connections to HTTP port from any IP"
 
   depends_on = [aws_security_group.SoftServe-sg.id]
