@@ -56,14 +56,11 @@ resource "aws_instance" "web_server_ec2_2a" {
   instance_type     = "t2.micro"
   availability_zone = "us-east-2a"
   key_name          = "ssh_OH"
-  # vpc_security_group_ids = [aws_security_group.SoftServe-sg.id] ## PENDIENTE
-  #subnet_id              = aws_subnet.subnet_2a.id
-  user_data = filebase64("server_setup.sh")
+  user_data         = filebase64("${path.module}/user_data/server_setup.sh")
   network_interface {
     device_index         = 0
     network_interface_id = aws_network_interface.ni_server_2a.id
   }
-  # user_data = filebase64("${path.module}/user_data/server_setup.sh") # Crear una carpeta
   tags = {
     Name = "web_server_ec2-2a"
   }

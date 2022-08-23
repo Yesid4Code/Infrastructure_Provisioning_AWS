@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 dir='.terraform'
 if [ -d $dir ]; then
     terraform destroy --auto-approve
