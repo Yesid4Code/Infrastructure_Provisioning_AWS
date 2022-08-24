@@ -76,3 +76,60 @@ resource "aws_route_table_association" "_2b" {
   subnet_id      = aws_subnet.subnet_2b.id
   route_table_id = aws_route_table.rt_main.id
 }
+
+# Network Load Balancer
+
+resource "aws_lb" "NLB" {
+  name               = "NLB"
+  internal           = false
+  load_balancer_type = "network"
+
+  subnets = [aws_subnet.subnet_2a.id, aws_subnet.subnet_2b.id]
+
+  depends_on = [aws_instance.web_server_ec2_2a, aws_instance.web_server_ec2_2b]
+
+  enable_deletion_protection       = false
+  enable_cross_zone_load_balancing = true
+
+  tags = {
+    Environment = "NLB"
+  }
+}
+
+resource "aws_lb_target_group" "NLB-target" {
+  name        = "NLB-target"
+  port        = 80
+  protocol    = "TCP"
+  target_type = "instance"
+  vpc_id      = aws_vpc.SoftServe_vpc.id
+
+  depends_on = [
+    aws_lb.NLB
+  ]
+}
+
+resource "aws_lb_target_group_attachment" "NLB-target-attached_2a" {
+  target_group_arn = aws_lb_target_group.NLB-target.arn
+  target_id        = aws_instance.web_server_ec2_2a.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "NLB-target-attached_2b" {
+  target_group_arn = aws_lb_target_group.NLB-target.arn
+  target_id        = aws_instance.web_server_ec2_2b.id
+  port             = 80
+}
+
+# Listener
+resource "aws_lb_listener" "front_end_80" {
+  load_balancer_arn = aws_lb.NLB.arn
+  port              = 80
+  protocol          = "TCP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.NLB-target.arn
+  }
+
+  depends_on = [aws_lb_target_group.NLB-target]
+}
