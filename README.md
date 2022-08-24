@@ -19,7 +19,7 @@ To generate the infrastructure on the platform, it is necessary to register at t
 
 ### AWS Root user and Identity and Access Manager - IAM
 
-When creating the user account in **AWS**, a **root** user is automatically generated for your account, however, this user has all the privileges (permissions) on the **AWS* account to access, modify and delete all the services available on the platform. For this reason it is recommended, as a first action, to generate an**IAM**user with administrator permissions, this permission is already more limited than the**root**user, so the risks are lower. It is advisable to establish different**IAM Users** for each of the roles you have on the platform and work with them ([IAM Identidites][IAM Identities]).
+When creating the user account in **AWS**, a **root** user is automatically generated for your account, however, this user has all the privileges (permissions) on the **AWS** account to access, modify and delete all the services available on the platform. For this reason it is recommended, as a first action, to generate an **IAM** user with administrator permissions, this permission is already more limited than the **root** user, so the risks are lower. It is advisable to establish different **IAM Users** for each of the roles you have on the platform and work with them ([IAM Identidites][IAM Identities]).
 
 > The **root** user should not be used, only to perform some account and service administration tasks. It is advisable to save the access data with extreme caution.
 
@@ -31,7 +31,6 @@ In order not to enter the access credentials directly in the code, in the comman
 * `curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"`
 * `unzip awscliv2.zip`
 * `sudo ./aws/install`
-
 
 ```linux
 aws config
@@ -47,7 +46,7 @@ The services used by the architecture are:
 
 ### Region and Availability Zone
 
-**Regions** are the different distributions zones that **AWS** has around the world([AWS Infrastructure][AWS Infraestrucutre]).
+**Regions** are the different distributions zones that **AWS** has around the world ([AWS Infrastructure][AWS Infraestrucutre]).
 
 * [Regions ans Zones][Regions and zones]
 * Every region has a **VPC** by default.
@@ -99,7 +98,7 @@ The size of a **CIDR** block can be between **/16** and **/28**.
 
 **Private IP** – Private IP addresses are derived from the *CIDR Block*, used to derive IP addresses for subnets and instances.
 
-**Public IP**: In order for the instances to communicate with resources outside the **VPC**, they must have a public address assigned, so they will also have a private address for communication within the **VPC**and a public one for all communication outside the**VPC**. The reserved IP address is not fixed, it changes over time.
+**Public IP**: In order for the instances to communicate with resources outside the **VPC**, they must have a public address assigned, so they will also have a private address for communication within the **VPC** and a public one for all communication outside the **VPC**. The reserved IP address is not fixed, it changes over time.
 
 **Elastic IP**: they are public IP addresses and you also have to reserve them, unlike the previous ones, these are static addresses, they do not vary over time. If you have such an address but are not using it, you will be charged for its non-use, which is why it must be released.
 
@@ -232,8 +231,6 @@ EC2 instances require a Network Interface, where a Public IP address will be ass
 
 The code in this repository is made with **Terraform**, so you can browse the different files and learn their syntax using the help of the **Terraform** documentation for **AWS**, [AWS Provider][AWS Provider].
 
-Version 1.0 of this repository contains the following infrastructure where the **Network Load Balancer** is not yet used, to access the instances it must be done through the Public IP generated at the time of linking the *Network Interface* with the EC2 instance.
-
 The most prominent **Terraform** commands are the following:
 
 * `terraform init`. Review the configuration in all terraform files and download the necessary plugins to interact with the AWS API.
@@ -252,6 +249,8 @@ The most prominent **Terraform** commands are the following:
 * `terraform destroy --auto-approve`: Destroy the infrastructure.
 * `terraform -help`: displays a list of commands that can be used with **Terraform**.
 
+Version 1.0 of this repository contains the following infrastructure where the **Network Load Balancer** is not yet used, to access the instances it must be done through the Public IP generated at the time of linking the *Network Interface* with the EC2 instance.
+
 * Version [1.0][V1.0]
 
 <p align="center">
@@ -266,7 +265,7 @@ Version 2.0 of this repository already has the infrastructure required for the d
     <img src="images/IaCv2.0.png" alt="Base architecture">
 </p>
 
-The generated crypts in the `/user_data/` folder:
+The generated scripts in the `/user_data/` folder:
 
 * `/user_data/server_setup.sh`: is used by **Terraform** to make changes to the **EC2** instance upon creation.
 * `/user_data/deploy.sh` - Create the infrastructure on **AWS**. Every time it is executed it deletes the infrastructure and recreates it.
