@@ -232,8 +232,6 @@ EC2 instances require a Network Interface, where a Public IP address will be ass
 
 The code in this repository is made with **Terraform**, so you can browse the different files and learn their syntax using the help of the **Terraform** documentation for **AWS**, [AWS Provider][AWS Provider].
 
-Version 1.0 of this repository contains the following infrastructure where the **Network Load Balancer** is not yet used, to access the instances it must be done through the Public IP generated at the time of linking the *Network Interface* with the EC2 instance.
-
 The most prominent **Terraform** commands are the following:
 
 * `terraform init`. Review the configuration in all terraform files and download the necessary plugins to interact with the AWS API.
@@ -251,6 +249,8 @@ The most prominent **Terraform** commands are the following:
   * Apply the code on the desired platform, in this case **AWS**.
 * `terraform destroy --auto-approve`: Destroy the infrastructure.
 * `terraform -help`: displays a list of commands that can be used with **Terraform**.
+
+Version 1.0 of this repository contains the following infrastructure where the **Network Load Balancer** is not yet used, to access the instances it must be done through the Public IP generated at the time of linking the *Network Interface* with the EC2 instance.
 
 * Version [1.0][V1.0]
 
