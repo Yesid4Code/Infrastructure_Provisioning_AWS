@@ -38,3 +38,8 @@ output "private_ip_web_server_ec2_2b" {
   description = "The private IP addres for the subnet 2"
   value       = try(aws_instance.web_server_ec2_2b.private_ip, "")
 }
+
+output "NLB_DNS_name" {
+  description = "Network Load Balancer"
+  value       = try(aws_lb.NLB.dns_name, "")
+}
