@@ -32,7 +32,6 @@ In order not to enter the access credentials directly in the code, in the comman
 * `unzip awscliv2.zip`
 * `sudo ./aws/install`
 
-
 ```linux
 aws config
 AWS Access Key ID [None]: AKIASSEALOGMARMYABHP
@@ -47,7 +46,7 @@ The services used by the architecture are:
 
 ### Region and Availability Zone
 
-**Regions** are the different distributions zones that **AWS** has around the world([AWS Infrastructure][AWS Infraestrucutre]).
+**Regions** are the different distributions zones that **AWS** has around the world ([AWS Infrastructure][AWS Infraestrucutre]).
 
 * [Regions ans Zones][Regions and zones]
 * Every region has a **VPC** by default.
